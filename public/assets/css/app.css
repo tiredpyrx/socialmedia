@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background: whitesmoke;
+
+}
+
+.error {
+    @apply text-gray-50 mt-2 text-sm
+}
+
+button {
+    transition: .4s;
+}
+
+textarea {
+    resize: vertical;
+}
