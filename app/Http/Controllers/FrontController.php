@@ -20,10 +20,19 @@ class FrontController extends Controller
 
     public function show_feed(Post $post) {
         $posts = $post->all();
+        $post->load('likedByUsers');
         return view('front.feed.index', ['posts' => $posts]);
     }
 
-    public function show_post() {
-        return view('front.post.index');
+    public function profile_feed() {
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+        
+        $posts = Post::all();
+
+        return view('auth.profile.feed', ['posts' => $posts]);
+
     }
+
+    
 }

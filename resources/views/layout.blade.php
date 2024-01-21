@@ -16,7 +16,7 @@
     <div class="@if (!Request::is('register') && !Request::is('login')) flex @endif">
         @if (!Request::is('register') && !Request::is('login'))
             <div id="Main"
-                class="flex min-h-screen w-full transform flex-col items-start justify-start bg-gray-900 transition duration-500 ease-in-out sm:w-64 xl:translate-x-0 border-r border-gray-600">
+                class="flex min-h-screen w-full transform flex-col items-start justify-start border-r border-gray-600 bg-gray-900 transition duration-500 ease-in-out sm:w-64 xl:translate-x-0">
                 <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
 
                 <div class="hidden items-center justify-start space-x-3 p-6 xl:flex">
@@ -31,7 +31,7 @@
                 <div class="flex h-full w-full flex-1 flex-col justify-between py-5">
                     <div>
                         <div
-                            class="flex h-full w-full flex-1 gap-4 flex-col items-center justify-start space-y-3 border-b border-gray-600 pb-5 pl-4">
+                            class="flex h-full w-full flex-1 flex-col items-center justify-start gap-4 space-y-3 border-b border-gray-600 pb-5 pl-4">
                             <a href="{{ route('feed.show') }}"
                                 class="jusitfy-start flex w-full items-center space-x-6 rounded text-white duration-200 focus:text-indigo-400 focus:outline-none">
                                 <svg class="fill-stroke" width="24" height="24" viewBox="0 0 24 24"
@@ -55,24 +55,30 @@
                                 </svg>
                                 <p class="text-base leading-4">Feed</p>
                             </a>
-                            <a href="{{ route('users.show') }}"
+                            @if ($auth->admin)
+                                <a href="{{ route('users.show') }}"
+                                    class="jusitfy-start flex w-full items-center space-x-6 rounded text-white duration-200 focus:text-indigo-400 focus:outline-none">
+                                    <svg class="fill-stroke" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"
+                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M6 21V19C6 17.9391 6.42143 16.9217 7.17157 16.1716C7.92172 15.4214 8.93913 15 10 15H14C15.0609 15 16.0783 15.4214 16.8284 16.1716C17.5786 16.9217 18 17.9391 18 19V21"
+                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    <p class="text-base leading-4">Users</p>
+                                </a>
+                            @endif
+                            <a href="{{ route('post.create') }}"
                                 class="jusitfy-start flex w-full items-center space-x-6 rounded text-white duration-200 focus:text-indigo-400 focus:outline-none">
-                                <svg class="fill-stroke" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="ml-0.5 w-5 fill-white" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                                     <path
-                                        d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"
-                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                    <path
-                                        d="M6 21V19C6 17.9391 6.42143 16.9217 7.17157 16.1716C7.92172 15.4214 8.93913 15 10 15H14C15.0609 15 16.0783 15.4214 16.8284 16.1716C17.5786 16.9217 18 17.9391 18 19V21"
-                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round" />
+                                        d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM323.8 202.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6L170.7 297c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4s12.4 13.6 21.6 13.6h96 32H424c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7l-120-176zM112 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z" />
                                 </svg>
-                                <p class="text-base leading-4">Users</p>
-                            </a>
-                            <a href="{{ route('post.show') }}"
-                                class="jusitfy-start flex w-full items-center space-x-6 rounded text-white duration-200 focus:text-indigo-400 focus:outline-none">
-                                <svg class="ml-0.5 fill-white w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM323.8 202.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6L170.7 297c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4s12.4 13.6 21.6 13.6h96 32H424c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7l-120-176zM112 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/></svg>
                                 <p class="text-base leading-4">New Post</p>
                             </a>
                         </div>
@@ -199,7 +205,8 @@
                     <a href="{{ route('profile.show') }}">
                         <div class="flex items-center space-x-2 pl-4">
                             <div>
-                                <img class="rounded-full" src="https://i.ibb.co/L1LQtBm/Ellipse-1.png" alt="avatar" />
+                                <img class="h-10 w-10 rounded-full object-cover" src="{{ $auth->avatar_src }}"
+                                    alt="avatar" />
                             </div>
                             <div class="flex flex-col items-start justify-start">
                                 <p class="cursor-pointer text-sm leading-5 text-white">{{ $auth->nick_name }}</p>
@@ -248,12 +255,13 @@
                 };
             </script>
         @endif
-        <div class="@if(!Request::is('login') && !Request::is('register')) w-full p-12 bg-gray-800 @endif">
+        <div class="@if (!Request::is('login') && !Request::is('register')) w-full p-12 bg-gray-800 @endif">
             @yield('content')
         </div>
     </div>
 
 
+    <script src="https://kit.fontawesome.com/1e21adaaa9.js" crossorigin="anonymous"></script>
     @stack('js')
     @vite('public/assets/js/app.js')
 </body>

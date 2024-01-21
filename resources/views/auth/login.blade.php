@@ -15,25 +15,18 @@
                     <form class="space-y-4 md:space-y-6" action="{{ route('login') }}" method="POST">
                         @csrf
                         <div>
-                            <label for="name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Your
-                                name</label>
-                            <input type="name" name="name" id="name"
+                            <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Your
+                                nick name</label>
+                            <input type="text" name="nick_name"
                                 class="focus:ring-blue-600 focus:border-blue-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
-                                placeholder="George Weasley" required="">
-                        </div>
-                        <div>
-                            <label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Your
-                                email</label>
-                            <input type="email" name="email" id="email"
-                                class="focus:ring-blue-600 focus:border-blue-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
-                                placeholder="george123@company.com" required="">
+                                placeholder="george_weasley" required>
                         </div>
                         <div>
                             <label for="password"
                                 class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Password</label>
                             <input type="password" name="password" id="password" placeholder="••••••••"
                                 class="focus:ring-blue-600 focus:border-blue-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
-                                required="">
+                                required>
                         </div>
                         <button type="submit"
                             class="bg-blue-600 hover:bg-blue-700 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4">Login</button>

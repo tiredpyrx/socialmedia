@@ -15,12 +15,26 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->insert([
-            'name' => 'Doga Korkmaz',
-            'nick_name' => 'dogaduck',
-            'avatar_src' => '',
-            'email' => 'doga@doga.com',
-            'password' => Hash::make('Doga123456789'),
-        ]);
+        $user_seed = [
+            [
+                'admin' => true,
+                'name' => 'Doga Korkmaz',
+                'nick_name' => 'dogaduck',
+                'avatar_src' => 'images/profiles/avatars/default/male.jpeg',
+                'gender' => 'male',
+                'email' => 'doga@doga.com',
+                'password' => Hash::make('Doga123456789'),
+            ],
+            [
+                'admin' => false,
+                'name' => 'Hazal Korkmaz',
+                'nick_name' => 'hazaliko',
+                'avatar_src' => 'images/profiles/avatars/default/female.jpeg',
+                'gender' => 'female',
+                'email' => 'yasariko@gmail.com',
+                'password' => Hash::make('Hk.yasariko1'),
+            ]
+        ];
+        DB::table('users')->insert($user_seed);
     }
 }

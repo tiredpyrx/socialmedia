@@ -3,10 +3,10 @@
 @section('content')
     <div class="mx-auto w-8/12">
         <div class="flex justify-between">
-            <div class="gap-x-2 flex">
-                <button class="here opens a modal that you can change your profile picture by file or file url">
+            <div class="flex gap-x-2">
+                <div>
                     <img class="aspect-square w-24 rounded-full object-cover" src="{{ $auth->avatar_src }}" alt="avatar" />
-                </button>
+                </div>
                 <div class="ml-4 flex flex-col justify-evenly text-gray-50">
                     <div class="flex items-center justify-between gap-x-4">
                         <div class="flex items-end gap-x-2">
@@ -14,13 +14,15 @@
                             <small>{{ $auth->nick_name }}</small>
                         </div>
                     </div>
-                    {{-- below is profile "bio" --}}
                     <div>
+                        @if (!$auth->bio)
+                            Hello, my name is {{ $auth->name }}!
+                        @endif
                         {{ shortenText($auth->bio, 150) }}
                     </div>
                 </div>
             </div>
-            <a href="{{ route('profile.edit.show') }}">
+            <a href="{{ route('profile.settings') }}">
                 <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -32,10 +34,14 @@
                 </svg>
             </a>
         </div>
-        <div>
-            <div class="text-white">
-                @foreach ($auth->posts as $post)
-                    {{ $post->caption }} <br>
+        <div class="mt-12">
+            {{-- sorry message will change if sees by profile owner or other people --}}
+            @if (!count($posts))
+                    <p class="text-center text-sm text-white">Sorry, this profile does not have any posts right now :(</p>
+                @endif
+            <div class="grid grid-cols-2 gap-4">
+                @foreach ($posts as $post)
+                    @include('components.boxes.post_box')
                 @endforeach
             </div>
         </div>

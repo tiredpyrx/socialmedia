@@ -24,6 +24,7 @@ class User extends Authenticatable
         'bio',
         'email',
         'password',
+        'admin'
     ];
 
     /**
@@ -49,6 +50,10 @@ class User extends Authenticatable
     
     public function posts() {
         return $this->hasMany('App\Models\Post', 'post_id', 'id');
+    }
+
+    public function likedPosts() {
+        return $this->belongsToMany(Post::class);
     }
 
 }

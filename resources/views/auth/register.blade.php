@@ -9,7 +9,8 @@
                     <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl">
                         Create a new account
                     </h1>
-                    <form class="space-y-4 md:space-y-6" action="{{ route('create') }}" method="POST" enctype="multipart/form-data">
+                    <form class="space-y-4 md:space-y-6" action="{{ route('create') }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         <div>
                             <label for="name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Your
@@ -24,7 +25,9 @@
                             @enderror
                         </div>
                         <div>
-                            <label for="nick_name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Choose a cool nickname</label>
+                            <label for="nick_name"
+                                class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Choose a cool
+                                nickname</label>
                             <input type="text" name="nick_name"
                                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
                                 placeholder="george_theduck" required>
@@ -35,10 +38,27 @@
                             @enderror
                         </div>
                         <div>
-                            <label for="avatar_src" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Your
+                            <label for="avatar_src" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                                 Avatar (Optional)</label>
-                            <input type="file" name="avatar_src" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm">
+                            <input type="file" name="avatar_src"
+                                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm">
                             @error('avatar_src')
+                                <div class="error">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div>
+                            <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                                Gender (Optional)</label>
+                            <select
+                                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+                                name="gender">
+                                <option value="{{ null }}">I don't want to share</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                            @error('gender')
                                 <div class="error">
                                     {{ $message }}
                                 </div>
@@ -49,7 +69,7 @@
                                 email</label>
                             <input type="email" name="email" id="email"
                                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
-                                placeholder="george123@company.com" required="">
+                                placeholder="george123@company.com" required>
                             @error('email')
                                 <div class="error">
                                     {{ $message }}

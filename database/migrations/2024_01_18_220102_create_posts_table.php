@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('src')->nullable();
             $table->string('caption');
             $table->string('description');
+            $table->boolean('hide_likes')->default(false);
             $table->timestamps();
         });
     }
