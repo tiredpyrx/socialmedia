@@ -12,6 +12,12 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const GENDER_CHOICES = [
+        'I don\'t want to share' => 'nogender',
+        'Male' => 'male',
+        'Female' => 'female',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -47,13 +53,25 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+
+    public function posts()
+    {
+        return $this->hasMany('App\Models\Post', 'user_id', 'id');
+    }
+
+    public function likedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'post_user_like');
+    }
+
+    public function getUserAvatarPathByGender(string $id, ?string $gender = '')
+    {
+        $user = User::all()->find($id);
+        $gender = $gender ? $gender : $user->gender;
+        $file_path = env('APP_URL') . 'images/profiles/avatars/default/' . $gender . '.jpeg';
+
+        return $file_path;
+    }
+
     
-    public function posts() {
-        return $this->hasMany('App\Models\Post', 'post_id', 'id');
-    }
-
-    public function likedPosts() {
-        return $this->belongsToMany(Post::class);
-    }
-
 }

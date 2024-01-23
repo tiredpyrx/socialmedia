@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\File;
+use phpDocumentor\Reflection\PseudoTypes\LowercaseString;
 
 class UserController extends Controller
 {
-
     public function index()
     {
         if (Auth::check()) {
@@ -55,25 +55,12 @@ class UserController extends Controller
             $fileName = $file->getClientOriginalName();
             $file->move(public_path('images/profiles/' . $request->nick_name . '/avatars/'), $fileName);
             $file_path = 'images/profiles/' . $request->nick_name . '/avatars/' . $fileName;
-            
-            $user->avatar_src = $file_path;
-        } else {
-            if ($credentials['gender'] === null) {
-                $fileName = 'nogender';
-            }
-            else if ($credentials['gender'] === 'male') {
-                $fileName = 'male';
-            }
-            if ($credentials['gender'] === 'female') {
-                $fileName = 'female';
-            }
 
-            $file_path = 'images/profiles/avatars/default/' . $fileName . '.jpeg';
             $user->avatar_src = $file_path;
-        }
-
-        if (array_key_exists('gender', $credentials)) {
+        } else if ($request->has('gender')) {
             $user->gender = $request->gender;
+            $file_path = $user->getUserAvatarPathByGender($user->id);
+            $user->avatar_src = env('APP_URL') . $file_path;
         }
 
 
@@ -101,13 +88,14 @@ class UserController extends Controller
         return view('auth.register');
     }
 
-    public function show_profile()
+    public function show(?string $id = '')
     {
-        if (!auth()->check()) {
-            return redirect()->route('login.show');
-        }
-        $posts = auth()->user()->posts;
-        return view('auth.profile.index', ['posts' => $posts]);
+        $user = User::find($id);
+        $posts = $user->posts;
+        // foreach ($posts as $post) {
+        //     $post->load('likedByUsers');
+        // }
+        return view('auth.profile.index', ['posts' => $posts, 'user' => $user]);
     }
 
     public function settings()
@@ -117,7 +105,8 @@ class UserController extends Controller
 
     public function edit()
     {
-        return view('auth.profile.settings.edit');
+        $auth = auth()->user();
+        return view('auth.profile.settings.edit', ['auth' => $auth, 'gender_choices' => User::GENDER_CHOICES]);
     }
 
     public function update(Request $request)
@@ -132,16 +121,30 @@ class UserController extends Controller
         if ($request->file('avatar_src')) {
             $file = $request->file('avatar_src');
             $old_path = $user->avatar_src;
-            if ($old_path) File::delete($old_path);
+            if ($old_path && !str_contains(strtolower($old_path), 'profiles/avatars/default')) File::delete($old_path);
             $fileName = $file->getClientOriginalName();
             $file->move(public_path('images/profiles/' . $user->nick_name . '/avatars/'), $fileName);
             $path = 'images/profiles/' . $user->nick_name . '/avatars/' . $fileName;
-            $user->avatar_src = $path;
+            $user->avatar_src = env('APP_URL') . $path;
         }
+
+
+        if (!$request->has('avatar_src') && $request->has('gender') && $request->gender != $user->gender) {
+            $user->avatar_src = $user->getUserAvatarPathByGender($user->id, $request->gender);
+        }
+
+        $canAvatarBeDeleted = !$request->has('avatar_src') && !str_contains(strtolower($user->avatar_src), 'profiles/avatars/default/') && $request->has('destroy_avatar');
+
+        if ($canAvatarBeDeleted) {
+            $default_avatar_path = $user->getUserAvatarPathByGender($user->id);
+            $user->avatar_src = $default_avatar_path;
+        }
+
+        $user->gender = $request->gender;
 
         if (array_key_exists('avatar_src', $filled_datas)) unset($filled_datas['avatar_src']);
 
-        $user->gender = $request->gender;
+
 
         $user->update($filled_datas);
         $user->save();
@@ -157,7 +160,8 @@ class UserController extends Controller
         return redirect()->route('home');
     }
 
-    public function like_post(string $id) {
+    public function like_post(string $id)
+    {
         $user = auth()->user();
 
         /** @var \App\Models\User $user */
@@ -169,5 +173,13 @@ class UserController extends Controller
         $user->likedPosts()->attach($id);
 
         return redirect()->back();
+    }
+
+    public function destroy()
+    {
+        $user = User::all()->find(auth()->user()->id);
+        $user->delete();
+        session()->flush();
+        return redirect()->route('login.show');
     }
 }

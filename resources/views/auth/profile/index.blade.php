@@ -5,20 +5,24 @@
         <div class="flex justify-between">
             <div class="flex gap-x-2">
                 <div>
-                    <img class="aspect-square w-24 rounded-full object-cover" src="{{ $auth->avatar_src }}" alt="avatar" />
+                    <img class="aspect-square w-24 rounded-full object-cover" src="{{ $user->avatar_src }}" alt="avatar" />
                 </div>
                 <div class="ml-4 flex flex-col justify-evenly text-gray-50">
                     <div class="flex items-center justify-between gap-x-4">
                         <div class="flex items-end gap-x-2">
-                            <h2 class="text-3xl">{{ $auth->name }}</h2>
-                            <small>{{ $auth->nick_name }}</small>
+                            <h2 class="text-3xl">{{ $user->name }}</h2>
+                            <small>{{ $user->nick_name }}</small>
                         </div>
                     </div>
                     <div>
-                        @if (!$auth->bio)
-                            Hello, my name is {{ $auth->name }}!
+                        @if (!$user->bio)
+                            Hello, my name is {{ $user->name }}!
                         @endif
-                        {{ shortenText($auth->bio, 150) }}
+                        {{ shortenText($user->bio, 150) }}
+                    </div>
+                    <div>
+                        Posts:
+                        <span>{{ count($user->posts) }}</span>
                     </div>
                 </div>
             </div>
@@ -34,11 +38,26 @@
                 </svg>
             </a>
         </div>
+        <button data-session-message="" data-alert-type="" class="show-alert-button hidden"></button>
+        @if (session('error'))
+            @push('js')
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const SHOW_ALERT_BUTTON = document.querySelector(".show-alert-button")
+                        if (SHOW_ALERT_BUTTON) {
+                            SHOW_ALERT_BUTTON.setAttribute("data-alert-type", "error")
+                            SHOW_ALERT_BUTTON.setAttribute("data-session-message", "{{ session('error') }}");
+                            SHOW_ALERT_BUTTON.click()
+                        }
+                    })
+                    document.querySelector(".show-alert-button").click()
+                </script>
+            @endpush
+        @endif
         <div class="mt-12">
-            {{-- sorry message will change if sees by profile owner or other people --}}
             @if (!count($posts))
-                    <p class="text-center text-sm text-white">Sorry, this profile does not have any posts right now :(</p>
-                @endif
+                <p class="text-center text-sm text-white">Sorry, this profile does not have any posts right now :(</p>
+            @endif
             <div class="grid grid-cols-2 gap-4">
                 @foreach ($posts as $post)
                     @include('components.boxes.post_box')

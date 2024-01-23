@@ -1,0 +1,1 @@
+console.log(window.box.querySelector(".post-count").querySelector("*").innerText = )

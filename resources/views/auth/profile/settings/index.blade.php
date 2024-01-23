@@ -12,6 +12,11 @@
                 My Feed
             </a>
         </div>
+        <div>
+            <a href="{{ route('profile.advanced') }}">
+                Advanced
+            </a>
+        </div>
     </div>
     <form class="fixed right-5 bottom-4" action="{{ route('logout') }}" method="POST">
         @csrf

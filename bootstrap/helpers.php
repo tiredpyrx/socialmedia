@@ -11,11 +11,18 @@ function shortenText($text, $max = 200) {
 
 function isOwnerPost(Post $post) {
     $user = auth()->user();
-    return $post->post_id === $user->id;
+    return $post->user_id === $user->id;
 }
 
 function isPostLikedByAuth(string $post_id) {
     $user = auth()->user();
     $post = Post::all()->find($post_id);
     return $post->likedByUsers()->find($user->id);
+}
+
+function primarySetDefault(mixed $primary, mixed $default) {
+    if (!isset($default)) {
+        return false;
+    }
+    return (isset($primary) && $primary) ? $primary : $default;
 }

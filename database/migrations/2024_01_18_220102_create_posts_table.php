@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->integer('post_id')->unsigned()->nullable();
-            $table->string('src')->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->string('caption');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->boolean('hide_likes')->default(false);
             $table->timestamps();
         });

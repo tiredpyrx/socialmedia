@@ -35,7 +35,7 @@ Route::post('/post', [PostController::class, 'store'])->name('post.store');
 
 
 
-Route::get('/profile', [UserController::class, 'show_profile'])->name('profile.show');
+Route::get('/profile/show/{id}', [UserController::class, 'show'])->name('profile.show');
 
 
 Route::get('/profile-settings', [UserController::class, 'settings'])->name('profile.settings');
@@ -49,8 +49,10 @@ Route::post('post/{post_id}/like', [UserController::class, 'like_post'])->name('
 Route::put('post/{post_id}/update', [PostController::class, 'update'])->name('post.update');
 Route::put('post/{post_id}/set_attrs', [PostController::class, 'update'])->name('post.update');
 
-Route::delete('post/{post_id}/destroy', [PostController::class, 'update'])->name('post.destroy');
+Route::delete('post/{post_id}/destroy', [PostController::class, 'destroy'])->name('post.destroy');
 
 Route::get('/profile/feed', [FrontController::class, 'profile_feed'])->name('profile.feed');
 
+Route::get('/profile/advanced', [FrontController::class, 'profile_advanced'])->name('profile.advanced');
 
+Route::post('/profile/destroy', [UserController::class, 'destroy'])->name('profile.destroy');
