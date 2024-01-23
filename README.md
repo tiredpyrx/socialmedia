@@ -1,7 +1,7 @@
 # A Tiny Social Media Simulator
 
-A tiny social media simulator that I devolop to learn and have fun
-This is my 6st day in laravel yay
+A tiny social media simulator that I devolop to learn and have fun 
+\This is my 6st day in laravel yay
 
 ## [1.1.0] - 2024-01-24
 
