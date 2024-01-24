@@ -39,8 +39,8 @@ A tiny social media simulator that I devolop to learn and have fun
 
 - php artisan .env.example .env
 - php artisan key:generate
-- php artisan serve
 - php artisan migrate
+- php artisan serve
 
 - npm install
 - npm run dev
