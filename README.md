@@ -37,10 +37,10 @@ A tiny social media simulator that I devolop to learn and have fun
 
 ## Install Instruction
 
-php artisan .env.example .env
-php artisan key:generate
-php artisan serve
-php artisan migrate
+- php artisan .env.example .env
+- php artisan key:generate
+- php artisan serve
+- php artisan migrate
 
-npm install
-npm run dev
+- npm install
+- npm run dev
