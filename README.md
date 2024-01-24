@@ -33,3 +33,14 @@ A tiny social media simulator that I devolop to learn and have fun
 - Post and profile does not goes through validation
 - Profile nicknames can be taken by multiple users
 - Profile biography is limitless
+
+
+## Install Instruction
+
+php artisan .env.example .env
+php artisan key:generate
+php artisan serve
+php artisan migrate
+
+npm install
+npm run dev
